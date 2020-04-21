@@ -11,6 +11,7 @@ with open(targetFile, 'r') as file :
 
 # Replace the target string
 filedata = filedata.replace(searchStr, replaceStr.strip())
+filedata = filedata.replace('localhost', replaceStr.strip())
 
 # Write the file out again
 with open(targetFile, 'w') as file:
