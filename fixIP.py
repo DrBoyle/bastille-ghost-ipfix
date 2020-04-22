@@ -1,18 +1,21 @@
-targetFile = 'config.production.json'
-searchStr = '127.0.0.1'
-jailIP = 'jailIP.md'
+hostsFile = '/etc/hosts'
+configFile = 'config.production.json'
+ipFile = 'jailIP.md'
+localIP = '127.0.0.1'
 
-with open(jailIP, 'r') as file :
-    replaceStr = file.read()
+with open(ipFile, 'r') as file :
+    jailIP = file.read().strip()
 
-# Read in the file
-with open(targetFile, 'r') as file :
-    filedata = file.read()
+def replaceString(targetFile, searchStr, replaceStr):
+    
+    with open(targetFile, 'r') as file :
+        fileData = file.read()
 
-# Replace the target string
-filedata = filedata.replace(searchStr, replaceStr.strip())
-filedata = filedata.replace('localhost', replaceStr.strip())
+    fileData = fileData.replace(searchStr, replaceStr)
 
-# Write the file out again
-with open(targetFile, 'w') as file:
-    file.write(filedata)
+    with open(targetFile, 'w') as file:
+        file.write(fileData)
+
+replaceString(hostsFile, localIP, jailIP)
+replaceString(configFile, localIP, jailIP)
+replaceString(configFile, 'localhost', jailIP)
